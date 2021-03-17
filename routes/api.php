@@ -7,5 +7,5 @@ Route::post('register', 'AuthController@register');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('users/{id}', 'UserController@user');
-    Route::post('add-user', 'UserController@addUser');
+    Route::post('users', 'UserController@addUser');
 });

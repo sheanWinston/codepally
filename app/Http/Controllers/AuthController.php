@@ -14,6 +14,18 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors(),
+            ], 401);
+        }
+
         $input = $request->only('email', 'password');
         $token = null;
 
@@ -46,7 +58,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
